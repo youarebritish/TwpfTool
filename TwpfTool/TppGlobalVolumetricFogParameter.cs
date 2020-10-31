@@ -5,14 +5,14 @@ using System.IO;
 namespace TwpfTool
 {
     [DebuggerDisplay("TppGlobalVolumetricFogParameter Param {this.ParamId}")]
-    public sealed class TppGlobalVolumetricFogParameter
+    public sealed class Parameter
     {
-        public readonly IList<TppGlobalVolumetricFogParameterSetting> Settings = new List<TppGlobalVolumetricFogParameterSetting>();
+        public readonly IList<ParameterSetting> Settings = new List<ParameterSetting>();
         public ushort ParamId { get; private set; }
 
-        public static TppGlobalVolumetricFogParameter Read(BinaryReader reader)
+        public static Parameter Read(BinaryReader reader)
         {
-            var instance = new TppGlobalVolumetricFogParameter();
+            var instance = new Parameter();
 
             var settingCount = reader.ReadByte();
             var trackType = (WeatherParametersFile.TrackType)reader.ReadByte();
@@ -26,7 +26,7 @@ namespace TwpfTool
 
             for (var i = 0; i < settingCount; i++)
             {
-                var setting = TppGlobalVolumetricFogParameterSetting.Read(reader, trackType);
+                var setting = ParameterSetting.Read(reader, trackType);
                 instance.Settings.Add(setting);
             }
 

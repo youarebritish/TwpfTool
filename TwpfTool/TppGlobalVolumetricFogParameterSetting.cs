@@ -7,14 +7,14 @@ using System.IO;
 namespace TwpfTool
 {
     [DebuggerDisplay("{Tag}")]
-    public sealed class TppGlobalVolumetricFogParameterSetting
+    public sealed class ParameterSetting
     {
         public string Tag { get; private set; }
         public readonly IList<ITrack> Tracks = new List<ITrack>();
 
-        public static TppGlobalVolumetricFogParameterSetting Read(BinaryReader reader, WeatherParametersFile.TrackType trackType)
+        public static ParameterSetting Read(BinaryReader reader, WeatherParametersFile.TrackType trackType)
         {
-            var instance = new TppGlobalVolumetricFogParameterSetting();
+            var instance = new ParameterSetting();
 
             var tagOffset = reader.ReadUInt32();
             var position = reader.BaseStream.Position;

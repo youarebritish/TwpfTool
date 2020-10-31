@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 
 namespace TwpfTool
 {
@@ -13,14 +16,20 @@ namespace TwpfTool
 
         private int tppGlobalVolumetricFogEntryCount;
         private int structCount;
-        private int tagCount;
 
         private TppGlobalVolumetricFog tppGlobalVolumetricFog;
+        private readonly IList<GenericStruct> genericStructs = new List<GenericStruct>();
 
         public bool Read(BinaryReader reader)
         {
             this.ReadHeader(reader);
             this.ReadTppGlobalVolumetricFog(reader);
+
+            for (var i = 0; i < this.structCount - 1; i++)
+            {
+                this.ReadGenericStruct(reader);
+            }
+
             return true;
         }
 
@@ -30,7 +39,7 @@ namespace TwpfTool
             var version = reader.ReadByte();
             var magic1 = reader.ReadInt32();
             this.structCount = reader.ReadInt32();
-            this.tagCount = reader.ReadInt32();
+            var tagCount = reader.ReadInt32();
 
             var structOffsets = new uint[this.structCount - 1];
             for (var i = 0; i < this.structCount - 1; i++)
@@ -53,6 +62,13 @@ namespace TwpfTool
         private bool ReadTppGlobalVolumetricFog(BinaryReader reader)
         {
             this.tppGlobalVolumetricFog = TppGlobalVolumetricFog.Read(reader, this.tppGlobalVolumetricFogEntryCount);
+            return true;
+        }
+
+        private bool ReadGenericStruct(BinaryReader reader)
+        {
+            var result = GenericStruct.Read(reader);
+            this.genericStructs.Add(result);
             return true;
         }
     }

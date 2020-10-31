@@ -3,6 +3,7 @@ using System.IO;
 
 namespace TwpfTool
 {
+    [DebuggerDisplay("({Red}, {Green}, {Blue})")]
     public struct Color
     {
         public readonly float Red;

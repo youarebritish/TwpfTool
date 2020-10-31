@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace TwpfTool
 {
@@ -31,6 +32,12 @@ namespace TwpfTool
             }
 
             return instance;
+        }
+
+        public IList<Keyframe> GetKeyframes()
+        {
+            return (from keyframe in this.Keyframes
+                    select keyframe as Keyframe).ToList();
         }
     }
 }

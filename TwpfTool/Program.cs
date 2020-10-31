@@ -20,6 +20,8 @@ namespace TwpfTool
                     var twpf = ReadFromBinary(path);
                     if (twpf != null)
                     {
+                        var builder = new SpreadsheetBuilder(twpf, Path.GetFileNameWithoutExtension(path));
+                        builder.Build();
                         //WriteToXml(vfx, Path.GetFileNameWithoutExtension(path) + ".vfx.xml");
                         continue;
                     }

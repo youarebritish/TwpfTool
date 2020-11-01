@@ -1,6 +1,16 @@
 {
   "structs": [
     {
+      "id": 0,
+      "name": "TppGlobalVolumetricFog",
+      "parameters": [
+        {
+          "id": 257,
+          "name": "density"
+        }
+      ]
+    },
+    {
       "id": 131110,
       "name": "TppAtmosphere"
     },

@@ -79,7 +79,7 @@ namespace TwpfTool
 
         private bool ReadTppGlobalVolumetricFog(BinaryReader reader)
         {
-            this.TppGlobalVolumetricFog = TppGlobalVolumetricFog.Read(reader, this.tppGlobalVolumetricFogEntryCount);
+            this.TppGlobalVolumetricFog = TppGlobalVolumetricFog.Read(reader, this.tppGlobalVolumetricFogEntryCount, definitions);
             return true;
         }
 

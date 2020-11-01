@@ -18,9 +18,12 @@ namespace TwpfTool
             var instance = new GenericStruct();
 
             instance.StructType = reader.ReadUInt32();
+
+            StructDefinition definition = null;
             if (definitions.ContainsKey(instance.StructType))
             {
                 instance.name = definitions[instance.StructType].name;
+                definition = definitions[instance.StructType];
             }
             else
             {
@@ -37,7 +40,7 @@ namespace TwpfTool
 
             for (var i = 0; i < parameterCount; i++)
             {
-                var param = Parameter.Read(reader);
+                var param = Parameter.Read(reader, definition);
                 instance.Parameters.Add(param);
             }
 

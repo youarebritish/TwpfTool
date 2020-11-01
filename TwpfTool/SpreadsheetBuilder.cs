@@ -223,7 +223,7 @@ namespace TwpfTool
 
         private void RenderScalarParam(Parameter param, ushort weatherId, IList<uint> times)
         {
-            this.workbook.WS.Value("Param " + param.ParamId);
+            this.workbook.WS.Value(param.ToString());
             this.RenderTracks(param.Settings[0].Tracks, weatherId, times, keyframe => keyframe.WriteValue(this.workbook, this.emptyStyle));
         }
 
@@ -231,17 +231,17 @@ namespace TwpfTool
         {
             var tracks = param.Settings[0].Tracks;
 
-            this.workbook.WS.Value("Param " + param.ParamId + "(.R)");
+            this.workbook.WS.Value(param.ToString() + "(.R)");
             this.RenderTracks(tracks, weatherId, times, keyframe => this.workbook.WS.Value((keyframe as ColorKeyframe)?.Value.Red));
             this.workbook.WS.Down();
 
             this.workbook.WS.Value(string.Empty);
-            this.workbook.WS.Value("Param " + param.ParamId + "(.G)");
+            this.workbook.WS.Value(param.ToString() + "(.G)");
             this.RenderTracks(tracks, weatherId, times, keyframe => this.workbook.WS.Value((keyframe as ColorKeyframe)?.Value.Green));
             this.workbook.WS.Down();
 
             this.workbook.WS.Value(string.Empty);
-            this.workbook.WS.Value("Param " + param.ParamId + "(.B)");
+            this.workbook.WS.Value(param.ToString() + "(.B)");
             this.RenderTracks(tracks, weatherId, times, keyframe => this.workbook.WS.Value((keyframe as ColorKeyframe)?.Value.Blue));
         }
 

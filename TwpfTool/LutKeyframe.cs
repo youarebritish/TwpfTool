@@ -16,7 +16,7 @@ namespace TwpfTool
 
         public override void WriteValue(Workbook workbook, Style style)
         {
-            workbook.WS.Value(this.Value, style);
+            workbook.WS.Value(this.Value.ToString(), style);
         }
     }
 }

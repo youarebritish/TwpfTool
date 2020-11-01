@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using NanoXLSX;
+using NanoXLSX.Styles;
+using System.IO;
 
 namespace TwpfTool
 {
@@ -13,5 +15,7 @@ namespace TwpfTool
         }
 
         protected abstract void ReadValue(BinaryReader reader);
+
+        public abstract void WriteValue(Workbook workbook, Style style);
     }
 }

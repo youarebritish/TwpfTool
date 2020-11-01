@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using NanoXLSX;
+using NanoXLSX.Styles;
+using System.Diagnostics;
 using System.IO;
 
 namespace TwpfTool
@@ -10,6 +12,11 @@ namespace TwpfTool
         protected override void ReadValue(BinaryReader reader)
         {
             this.Value = reader.ReadSingle();
+        }
+
+        public override void WriteValue(Workbook workbook, Style style)
+        {
+            workbook.WS.Value(this.Value, style);
         }
     }
 }

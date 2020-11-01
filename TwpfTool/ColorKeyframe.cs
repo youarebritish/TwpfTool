@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using NanoXLSX;
+using NanoXLSX.Styles;
+using System.Diagnostics;
 using System.IO;
 
 namespace TwpfTool
@@ -29,6 +31,11 @@ namespace TwpfTool
             var blue = reader.ReadSingle();
 
             this.Value = new Color(red, green, blue);
+        }
+
+        public override void WriteValue(Workbook workbook, Style style)
+        {
+            workbook.WS.Value($"{this.Value.Red}, {this.Value.Green}, {this.Value.Blue}", style);
         }
     }
 }

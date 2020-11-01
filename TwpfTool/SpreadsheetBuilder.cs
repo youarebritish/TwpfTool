@@ -28,25 +28,73 @@ namespace TwpfTool
             var times = this.GetTimes();
             this.width = times.Count + 2;
 
+            var weatherId = (ushort)0;
+
             foreach (var tag in this.twpf.Tags)
             {
                 this.RenderTagRow(tag);
                 this.RenderParameterHeaderRow();
-                this.RenderTimeRow();
+                this.RenderTimeRow(times);
+                this.RenderTagParams(tag, weatherId, times);
                 this.RenderEmptyRow();
             }
 
             workbook.Save();
         }
 
-        private void RenderTimeRow()
+        private void RenderTagParams(string tag, ushort weatherId, IList<uint> times)
+        {
+            this.workbook.WS.Value("TppGlobalVolumetricFog");
+            var parameters = from param in this.twpf.TppGlobalVolumetricFog.Parameters
+                             from setting in param.Settings
+                             where setting.Tag == tag
+                             select param;
+
+            foreach(var param in parameters)
+            {
+                this.RenderParam(param, weatherId, times);
+                this.workbook.WS.Down();
+                this.workbook.WS.Value(string.Empty);
+            }
+        }
+
+        private void RenderParam(Parameter param, ushort weatherId, IList<uint> times)
+        {
+            this.workbook.WS.Value("Param " + param.ParamId);
+
+            foreach(var track in param.Settings[0].Tracks)
+            {
+                if (track.WeatherId != weatherId)
+                {
+                    continue;
+                }
+
+                var currentColumn = 0;
+                foreach(var keyframe in track.GetKeyframes())
+                {
+                    var time = keyframe.Time;
+                    var timeIndex = times.IndexOf(time);
+
+                    while (currentColumn < timeIndex)
+                    {
+                        this.workbook.WS.Value(string.Empty);
+                        currentColumn++;
+                    }
+
+                    keyframe.WriteValue(this.workbook, this.emptyStyle);
+                    currentColumn++;
+                }
+            }
+        }
+
+        private void RenderTimeRow(IList<uint> times)
         {
             this.workbook.WS.Value("Time", this.timeStyle);
             this.workbook.WS.Value(string.Empty, this.timeStyle);
 
             for (var i = 2; i < this.width; i++)
             {
-                this.workbook.WS.Value(string.Empty, this.timeStyle);
+                this.workbook.WS.Value(times[i - 2], this.timeStyle);
             }
 
             this.workbook.WS.Down();

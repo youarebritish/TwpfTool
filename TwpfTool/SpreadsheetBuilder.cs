@@ -37,6 +37,12 @@ namespace TwpfTool
                 this.RenderParameterHeaderRow();
                 this.RenderTimeRow(times);
                 this.RenderTagParams("TppGlobalVolumetricFog", this.twpf.TppGlobalVolumetricFog.Parameters, tag, weatherId, times);
+
+                foreach (var @struct in this.twpf.GenericStructs)
+                {
+                    this.RenderTagParams($"Struct {@struct.StructType}", @struct.Parameters, tag, weatherId, times);
+                }
+
                 this.RenderEmptyRow();
             }
 
@@ -61,8 +67,15 @@ namespace TwpfTool
             }
 
             this.workbook.WS.Value(structName);
+            var isFirst = true;
+
             foreach (var param in filteredParameters)
             {
+                if (!isFirst)
+                {
+                    this.workbook.WS.Value(string.Empty);
+                }
+
                 if (param.TrackType != WeatherParametersFile.TrackType.Rgb)
                 {
                     this.RenderScalarParam(param, weatherId, times);
@@ -73,7 +86,8 @@ namespace TwpfTool
                 }
 
                 this.workbook.WS.Down();
-                this.workbook.WS.Value(string.Empty);
+
+                isFirst = false;
             }
         }
 

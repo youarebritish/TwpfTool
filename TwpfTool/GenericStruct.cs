@@ -1,20 +1,32 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace TwpfTool
 {
-    [DebuggerDisplay("Struct {StructType}")]
+    [DebuggerDisplay("{name}")]
     public sealed class GenericStruct
     {
         public uint StructType { get; private set; }
         public readonly IList<Parameter> Parameters = new List<Parameter>();
 
-        public static GenericStruct Read(BinaryReader reader)
+        private string name;
+
+        public static GenericStruct Read(BinaryReader reader, IDictionary<uint, StructDefinition> definitions)
         {
             var instance = new GenericStruct();
 
             instance.StructType = reader.ReadUInt32();
+            if (definitions.ContainsKey(instance.StructType))
+            {
+                instance.name = definitions[instance.StructType].name;
+            }
+            else
+            {
+                instance.name = $"Struct {instance.StructType}";
+            }
+
             var parameterCount = instance.StructType & 0xFFFF;
 
             var paramOffsets = new uint[parameterCount];
@@ -30,6 +42,11 @@ namespace TwpfTool
             }
 
             return instance;
+        }
+
+        public override string ToString()
+        {
+            return this.name;
         }
     }
 }

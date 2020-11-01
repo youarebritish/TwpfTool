@@ -21,7 +21,7 @@ namespace TwpfTool
         public SpreadsheetBuilder (WeatherParametersFile twpf, string name)
         {
             this.twpf = twpf;
-            this.workbook = new Workbook($"{name}.xlsx", "Sheet1");
+            this.workbook = new Workbook($"{name}.xlsx", "Weather 0");
         }
 
         public void Build()
@@ -40,7 +40,7 @@ namespace TwpfTool
 
                 foreach (var @struct in this.twpf.GenericStructs)
                 {
-                    this.RenderTagParams($"Struct {@struct.StructType}", @struct.Parameters, tag, weatherId, times);
+                    this.RenderTagParams(@struct.ToString(), @struct.Parameters, tag, weatherId, times);
                 }
 
                 this.RenderEmptyRow();

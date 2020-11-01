@@ -1,0 +1,25 @@
+{
+  "structs":
+  [
+    {
+      "id": 131110,
+      "name": "TppAtmosphere"
+    },
+    {
+      "id": 131091,
+      "name": "TppSky"
+    },
+    {
+      "id": 196624,
+      "name": "GrPluginSettings"
+    },
+    {
+      "id": 655373,
+      "name": "GenerativeClouds"
+    },
+    {
+      "id": 262154,
+      "name": "ColorCorrection"
+    }
+  ]
+}

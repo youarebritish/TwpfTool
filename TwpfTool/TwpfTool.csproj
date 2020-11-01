@@ -36,6 +36,9 @@
     <Reference Include="NanoXLSX, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NanoXLSX.1.4.1\lib\net45\NanoXLSX.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -56,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpreadsheetBuilder.cs" />
     <Compile Include="StrengthKeyframe.cs" />
+    <Compile Include="StructDefinitions.cs" />
     <Compile Include="TppGlobalVolumetricFog.cs" />
     <Compile Include="TppGlobalVolumetricFogParameter.cs" />
     <Compile Include="TppGlobalVolumetricFogParameterSetting.cs" />
@@ -64,6 +68,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="definitions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

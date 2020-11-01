@@ -14,15 +14,19 @@ namespace TwpfTool
             Lut = 4
         }
 
+        private IDictionary<uint, StructDefinition> definitions;
         private int tppGlobalVolumetricFogEntryCount;
         private int structCount;
 
         public TppGlobalVolumetricFog TppGlobalVolumetricFog;
+
         public readonly IList<GenericStruct> GenericStructs = new List<GenericStruct>();
         public readonly IList<string> Tags = new List<string>();
 
-        public bool Read(BinaryReader reader)
+        public bool Read(BinaryReader reader, IDictionary<uint, StructDefinition> definitions)
         {
+            this.definitions = definitions;
+
             this.ReadHeader(reader);
             this.ReadTppGlobalVolumetricFog(reader);
 
@@ -81,7 +85,7 @@ namespace TwpfTool
 
         private bool ReadGenericStruct(BinaryReader reader)
         {
-            var result = GenericStruct.Read(reader);
+            var result = GenericStruct.Read(reader, definitions);
             this.GenericStructs.Add(result);
             return true;
         }

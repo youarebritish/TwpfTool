@@ -46,7 +46,7 @@ namespace TwpfTool
             var times = this.GetTimes();
             this.width = times.Count + 2;
 
-            var allParams = this.twpf.TppGlobalVolumetricFog.Parameters;
+            var allParams = new List<Parameter>(this.twpf.TppGlobalVolumetricFog.Parameters);
             foreach(var @struct in this.twpf.GenericStructs)
             {
                 foreach(var param in @struct.Parameters)

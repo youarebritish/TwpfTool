@@ -7,6 +7,62 @@
         {
           "id": 257,
           "name": "density"
+        },
+        {
+          "id": 275,
+          "name": "power"
+        },
+        {
+          "id": 276,
+          "name": "fogDirLightGain"
+        },
+        {
+          "id": 258,
+          "name": "color"
+        },
+        {
+          "id": 264,
+          "name": "skyAlbedo"
+        },
+        {
+          "id": 265,
+          "name": "rayleighScattering"
+        },
+        {
+          "id": 266,
+          "name": "mieScattering"
+        },
+        {
+          "id": 260,
+          "name": "luminance"
+        },
+        {
+          "id": 268,
+          "name": "mieAnisotropy"
+        },
+        {
+          "id": 269,
+          "name": "exposureOffset0"
+        },
+        {
+          "id": 270,
+          "name": "exposureOffset0_Ev"
+        },
+        {
+          "id": 271,
+          "name": "exposureOffset1"
+        },
+        {
+          "id": 272,
+          "name": "exposureOffset1_Ev"
+        },
+        {
+          "id": 273,
+          "name": "exposureOffset2"
+        },
+        {
+          "id": 274,
+          "name": "exposureOffset2_Ev"
         }
       ]
     },

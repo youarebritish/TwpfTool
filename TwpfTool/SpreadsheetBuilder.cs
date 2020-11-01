@@ -1,5 +1,6 @@
 ﻿using NanoXLSX;
 using NanoXLSX.Styles;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,22 +36,32 @@ namespace TwpfTool
                 this.RenderTagRow(tag);
                 this.RenderParameterHeaderRow();
                 this.RenderTimeRow(times);
-                this.RenderTagParams(tag, weatherId, times);
+                this.RenderTagParams("TppGlobalVolumetricFog", this.twpf.TppGlobalVolumetricFog.Parameters, tag, weatherId, times);
                 this.RenderEmptyRow();
             }
 
             workbook.Save();
         }
 
-        private void RenderTagParams(string tag, ushort weatherId, IList<uint> times)
+        private void RenderTagParams(string structName, IEnumerable<Parameter> parameters, string tag, ushort weatherId, IList<uint> times)
         {
-            this.workbook.WS.Value("TppGlobalVolumetricFog");
-            var parameters = from param in this.twpf.TppGlobalVolumetricFog.Parameters
-                             from setting in param.Settings
-                             where setting.Tag == tag
-                             select param;
+            var filteredParameters = (from param in parameters
+                                     from setting in param.Settings
+                                     where setting.Tag == tag
+                                     select param).ToList();
 
-            foreach (var param in parameters)
+            var settings = (from param in filteredParameters
+                            from setting in param.Settings
+                            where setting.Tag == tag
+                            select setting).ToList();
+
+            if (settings.Count == 0)
+            {
+                return;
+            }
+
+            this.workbook.WS.Value(structName);
+            foreach (var param in filteredParameters)
             {
                 if (param.TrackType != WeatherParametersFile.TrackType.Rgb)
                 {
@@ -66,117 +77,60 @@ namespace TwpfTool
             }
         }
 
-        private void RenderScalarParam(Parameter param, ushort weatherId, IList<uint> times)
+        private void RenderKeyframes(IList<Keyframe> keyframes, IList<uint> times, Action<Keyframe> renderKeyframe)
         {
-            this.workbook.WS.Value("Param " + param.ParamId);
-            foreach(var track in param.Settings[0].Tracks)
+            var currentColumn = 0;
+            foreach (var keyframe in keyframes)
+            {
+                var time = keyframe.Time;
+                var timeIndex = times.IndexOf(time);
+
+                while (currentColumn < timeIndex)
+                {
+                    this.workbook.WS.Value(string.Empty);
+                    currentColumn++;
+                }
+
+                renderKeyframe(keyframe);
+                currentColumn++;
+            }
+        }
+
+        private void RenderTracks(IList<ITrack> tracks, ushort weatherId, IList<uint> times, Action<Keyframe> renderKeyframe)
+        {
+            foreach (var track in tracks)
             {
                 if (track.WeatherId != weatherId)
                 {
                     continue;
                 }
 
-                var currentColumn = 0;
-                foreach(var keyframe in track.GetKeyframes())
-                {
-                    var time = keyframe.Time;
-                    var timeIndex = times.IndexOf(time);
-
-                    while (currentColumn < timeIndex)
-                    {
-                        this.workbook.WS.Value(string.Empty);
-                        currentColumn++;
-                    }
-
-                    keyframe.WriteValue(this.workbook, this.emptyStyle);
-                    currentColumn++;
-                }
+                RenderKeyframes(track.GetKeyframes(), times, renderKeyframe);
             }
+        }
+
+        private void RenderScalarParam(Parameter param, ushort weatherId, IList<uint> times)
+        {
+            this.workbook.WS.Value("Param " + param.ParamId);
+            this.RenderTracks(param.Settings[0].Tracks, weatherId, times, keyframe => keyframe.WriteValue(this.workbook, this.emptyStyle));
         }
 
         private void RenderColorParam(Parameter param, ushort weatherId, IList<uint> times)
         {
+            var tracks = param.Settings[0].Tracks;
+
             this.workbook.WS.Value("Param " + param.ParamId + "(.R)");
-            foreach (var track in param.Settings[0].Tracks)
-            {
-                if (track.WeatherId != weatherId)
-                {
-                    continue;
-                }
-
-                var currentColumn = 0;
-                foreach (var keyframe in track.GetKeyframes())
-                {
-                    var time = keyframe.Time;
-                    var timeIndex = times.IndexOf(time);
-
-                    while (currentColumn < timeIndex)
-                    {
-                        this.workbook.WS.Value(string.Empty);
-                        currentColumn++;
-                    }
-
-                    var colorKeyframe = keyframe as ColorKeyframe;
-                    this.workbook.WS.Value(colorKeyframe.Value.Red);
-                    currentColumn++;
-                }
-            }
-
+            this.RenderTracks(tracks, weatherId, times, keyframe => this.workbook.WS.Value((keyframe as ColorKeyframe)?.Value.Red));
             this.workbook.WS.Down();
+
             this.workbook.WS.Value(string.Empty);
             this.workbook.WS.Value("Param " + param.ParamId + "(.G)");
-            foreach (var track in param.Settings[0].Tracks)
-            {
-                if (track.WeatherId != weatherId)
-                {
-                    continue;
-                }
-
-                var currentColumn = 0;
-                foreach (var keyframe in track.GetKeyframes())
-                {
-                    var time = keyframe.Time;
-                    var timeIndex = times.IndexOf(time);
-
-                    while (currentColumn < timeIndex)
-                    {
-                        this.workbook.WS.Value(string.Empty);
-                        currentColumn++;
-                    }
-
-                    var colorKeyframe = keyframe as ColorKeyframe;
-                    this.workbook.WS.Value(colorKeyframe.Value.Green);
-                    currentColumn++;
-                }
-            }
-
+            this.RenderTracks(tracks, weatherId, times, keyframe => this.workbook.WS.Value((keyframe as ColorKeyframe)?.Value.Green));
             this.workbook.WS.Down();
+
             this.workbook.WS.Value(string.Empty);
             this.workbook.WS.Value("Param " + param.ParamId + "(.B)");
-            foreach (var track in param.Settings[0].Tracks)
-            {
-                if (track.WeatherId != weatherId)
-                {
-                    continue;
-                }
-
-                var currentColumn = 0;
-                foreach (var keyframe in track.GetKeyframes())
-                {
-                    var time = keyframe.Time;
-                    var timeIndex = times.IndexOf(time);
-
-                    while (currentColumn < timeIndex)
-                    {
-                        this.workbook.WS.Value(string.Empty);
-                        currentColumn++;
-                    }
-
-                    var colorKeyframe = keyframe as ColorKeyframe;
-                    this.workbook.WS.Value(colorKeyframe.Value.Blue);
-                    currentColumn++;
-                }
-            }
+            this.RenderTracks(tracks, weatherId, times, keyframe => this.workbook.WS.Value((keyframe as ColorKeyframe)?.Value.Blue));
         }
 
         private void RenderTimeRow(IList<uint> times)

@@ -1,7 +1,6 @@
 ﻿using NanoXLSX;
 using NanoXLSX.Styles;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,12 +8,30 @@ namespace TwpfTool
 {
     public class SpreadsheetBuilder
     {
+        private struct TimeColor
+        {
+            public readonly byte Red;
+            public readonly byte Green;
+            public readonly byte Blue;
+
+            public TimeColor(byte red, byte green, byte blue)
+            {
+                this.Red = red;
+                this.Green = green;
+                this.Blue = blue;
+            }
+
+            public override string ToString() => $"FF{this.Red:X2}{this.Green:X2}{this.Blue:X2}";
+        }
+
         private readonly WeatherParametersFile twpf;
         private readonly Workbook workbook;
         private readonly Style headerStyle = MakeHeaderStyle();
         private readonly Style tagStyle = MakeTagStyle();
         private readonly Style emptyStyle = MakeEmptyStyle();
         private readonly Style timeStyle = MakeTimeStyle();
+
+        private readonly IDictionary<uint, TimeColor> timeColors = MakeTimeColors();
 
         private int width;
 
@@ -70,6 +87,64 @@ namespace TwpfTool
             }
 
             workbook.Save();
+        }
+
+        private static IDictionary<uint, TimeColor> MakeTimeColors()
+        {
+            return new Dictionary<uint, TimeColor>
+            {
+                { 0, new TimeColor(50, 89, 134) },
+                { 284, new TimeColor(46, 89, 139) },
+                { 324, new TimeColor(146, 172, 205) },
+                { 344, new TimeColor(143, 174, 207) },
+                { 363, new TimeColor(219, 217, 216) },
+                { 365, new TimeColor(252, 211, 181) },
+                { 374, new TimeColor(246, 210, 179) },
+                { 392, new TimeColor(249, 209, 177) },
+                { 451, new TimeColor(250, 249, 203) },
+                { 737, new TimeColor(248, 248, 211) },
+                { 1024, new TimeColor(249, 248, 205) },
+                { 1067, new TimeColor(250, 208, 181) },
+                { 1084, new TimeColor(244, 206, 177) },
+                { 1095, new TimeColor(247, 213, 180) },
+                { 1096, new TimeColor(217, 217, 220) },
+                { 1115, new TimeColor(145, 176, 206) },
+                { 1134, new TimeColor(153, 172, 208) },
+                { 1174, new TimeColor(48, 90, 113) }
+            };
+        }
+
+        private TimeColor GetTimeColor(uint time)
+        {
+            if (this.timeColors.ContainsKey(time))
+            {
+                return this.timeColors[time];
+            }
+
+            var keys = this.timeColors.Keys.OrderBy(val => val).ToList();
+            for(var i = 0; i < keys.Count; i++)
+            {
+                var keyTime = keys[i];
+                if (keyTime <= time)
+                {
+                    continue;
+                }
+
+                var prevKeyTime = keys[i - 1];
+                var range = (keyTime - prevKeyTime);
+                var diff = time - prevKeyTime;
+                var lerpFactor = (float)diff / (float)range;
+
+                var prevColor = this.timeColors[prevKeyTime];
+                var thisColor = this.timeColors[keyTime];
+                var red = (byte)(prevColor.Red + (byte)(lerpFactor * (thisColor.Red - prevColor.Red)));
+                var green = (byte)(prevColor.Green + (byte)(lerpFactor * (thisColor.Green - prevColor.Green)));
+                var blue = (byte)(prevColor.Blue + (byte)(lerpFactor * (thisColor.Blue - prevColor.Blue)));
+
+                return new TimeColor(red, green, blue);
+            }
+
+            return new TimeColor(0, 0, 0);
         }
 
         private void RenderTagParams(string structName, IEnumerable<Parameter> parameters, string tag, ushort weatherId, IList<uint> times)
@@ -183,7 +258,11 @@ namespace TwpfTool
 
                 var timeStr = $"{hours:00}:{minutes:00}";
 
-                this.workbook.WS.Value(timeStr, this.timeStyle);
+                var style = new Style();
+                style.CurrentFill.ForegroundColor = this.GetTimeColor(time).ToString();
+                style.CurrentFill.PatternFill = Fill.PatternValue.solid;
+
+                this.workbook.WS.Value(timeStr, style);
             }
 
             this.workbook.WS.Down();

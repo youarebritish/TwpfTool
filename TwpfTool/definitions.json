@@ -79,6 +79,10 @@
           "name": "skyColorSunScale"
         },
         {
+          "id": 519,
+          "name": "skyLightSunScale"
+        },
+        {
           "id": 522,
           "name": "shadowRange"
         },
@@ -190,23 +194,217 @@
     },
     {
       "id": 131091,
-      "name": "TppSky"
+      "name": "TppSky",
+      "parameters": [
+        {
+          "id": 641,
+          "name": "diffusion"
+        },
+        {
+          "id": 642,
+          "name": "cloudDensity"
+        },
+        {
+          "id": 653,
+          "name": "dom2Density"
+        },
+        {
+          "id": 654,
+          "name": "dom3Density"
+        },
+        {
+          "id": 643,
+          "name": "dirLightGain"
+        },
+        {
+          "id": 644,
+          "name": "inCloudScatterGain"
+        },
+        {
+          "id": 645,
+          "name": "ambLightGain"
+        },
+        {
+          "id": 646,
+          "name": "cylCloudDensity"
+        },
+        {
+          "id": 647,
+          "name": "cylBackScatGain"
+        },
+        {
+          "id": 648,
+          "name": "cylFrontDirGain"
+        },
+        {
+          "id": 649,
+          "name": "cylFrontAmbGain"
+        },
+        {
+          "id": 650,
+          "name": "cloudInfluenceOfFog"
+        },
+        {
+          "id": 659,
+          "name": "cloudInfluenceOfFogMin"
+        },
+        {
+          "id": 651,
+          "name": "cloudFogFalloff"
+        },
+        {
+          "id": 652,
+          "name": "cloudFogFalloffStart"
+        },
+        {
+          "id": 655,
+          "name": "cloudDensityMax"
+        },
+        {
+          "id": 656,
+          "name": "dom2DensityMax"
+        },
+        {
+          "id": 657,
+          "name": "dom3DensityMax"
+        },
+        {
+          "id": 658,
+          "name": "cylCloudDensityMax"
+        }
+      ]
     },
     {
       "id": 196624,
-      "name": "GrPluginSettings"
+      "name": "GrPluginSettings",
+      "parameters": [
+        {
+          "id": 769,
+          "name": "minExposure"
+        },
+        {
+          "id": 770,
+          "name": "maxExposure"
+        },
+        {
+          "id": 782,
+          "name": "addExpComp0"
+        },
+        {
+          "id": 783,
+          "name": "addExpComp0_Ev"
+        },
+        {
+          "id": 784,
+          "name": "addExpComp1"
+        },
+        {
+          "id": 785,
+          "name": "addExpComp1_Ev"
+        },
+        {
+          "id": 786,
+          "name": "addExpComp2"
+        },
+        {
+          "id": 787,
+          "name": "addExpComp2_Ev"
+        },
+        {
+          "id": 788,
+          "name": "bloomBrightnessExtraction"
+        },
+        {
+          "id": 789,
+          "name": "bloomWeight"
+        },
+        {
+          "id": 775,
+          "name": "bloomSize"
+        }
+      ]
     },
     {
       "id": 655373,
-      "name": "GenerativeClouds"
+      "name": "GenerativeClouds",
+      "parameters": [
+        {
+          "id": 2561,
+          "name": "gcEnable"
+        },
+        {
+          "id": 2561,
+          "name": "gcDensity"
+        },
+        {
+          "id": 2563,
+          "name": "gcDensityMax"
+        },
+        {
+          "id": 2564,
+          "name": "gcScattering"
+        },
+        {
+          "id": 2565,
+          "name": "gcAbsorption"
+        },
+        {
+          "id": 2566,
+          "name": "gcMieAnisotropy"
+        },
+        {
+          "id": 2567,
+          "name": "gcDirLightGain"
+        },
+        {
+          "id": 2568,
+          "name": "gcSkyLightGain"
+        },
+        {
+          "id": 2569,
+          "name": "gcRayMarchDepth"
+        },
+        {
+          "id": 2570,
+          "name": "gcExponent0"
+        },
+        {
+          "id": 2571,
+          "name": "gcExponent0Max"
+        },
+        {
+          "id": 2572,
+          "name": "gcExponent1"
+        },
+        {
+          "id": 2573,
+          "name": "gcExponent1Max"
+        }
+      ]
     },
     {
       "id": 262154,
-      "name": "ColorCorrection"
+      "name": "ColorCorrection",
+      "parameters": [
+        {
+          "id": 1025,
+          "name": "colorScale"
+        },
+        {
+          "id": 1032,
+          "name": "colorScale2"
+        }
+      ]
     },
     {
       "id": 458756,
-      "name": "WeatherParameters"
+      "name": "WeatherParameters",
+      "parameters": [
+        {
+          "id": 1794,
+          "name": "windSpeed"
+        }
+      ]
     }
   ]
 }

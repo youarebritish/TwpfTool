@@ -29,21 +29,44 @@ namespace TwpfTool
             var times = this.GetTimes();
             this.width = times.Count + 2;
 
-            var weatherId = (ushort)0;
-
-            foreach (var tag in this.twpf.Tags)
+            var allParams = this.twpf.TppGlobalVolumetricFog.Parameters;
+            foreach(var @struct in this.twpf.GenericStructs)
             {
-                this.RenderTagRow(tag);
-                this.RenderParameterHeaderRow();
-                this.RenderTimeRow(times);
-                this.RenderTagParams("TppGlobalVolumetricFog", this.twpf.TppGlobalVolumetricFog.Parameters, tag, weatherId, times);
-
-                foreach (var @struct in this.twpf.GenericStructs)
+                foreach(var param in @struct.Parameters)
                 {
-                    this.RenderTagParams(@struct.ToString(), @struct.Parameters, tag, weatherId, times);
+                    allParams.Add(param);
+                }
+            }
+
+            var weatherIds = (from param in allParams
+                              from setting in param.Settings
+                              from track in setting.Tracks
+                              select track.WeatherId)
+                              .Distinct()
+                              .OrderBy(val => val)
+                              .ToList();
+
+            foreach (var weatherId in weatherIds)
+            {
+                if (weatherId != 0)
+                {
+                    this.workbook.AddWorksheet($"Weather={weatherId}");
                 }
 
-                this.RenderEmptyRow();
+                foreach (var tag in this.twpf.Tags)
+                {
+                    this.RenderTagRow(tag);
+                    this.RenderParameterHeaderRow();
+                    this.RenderTimeRow(times);
+                    this.RenderTagParams("TppGlobalVolumetricFog", this.twpf.TppGlobalVolumetricFog.Parameters, tag, weatherId, times);
+
+                    foreach (var @struct in this.twpf.GenericStructs)
+                    {
+                        this.RenderTagParams(@struct.ToString(), @struct.Parameters, tag, weatherId, times);
+                    }
+
+                    this.RenderEmptyRow();
+                }
             }
 
             workbook.Save();
@@ -154,7 +177,13 @@ namespace TwpfTool
 
             for (var i = 2; i < this.width; i++)
             {
-                this.workbook.WS.Value(times[i - 2], this.timeStyle);
+                var time = times[i - 2];
+                var hours = Math.Floor((float)time / 60.0f);
+                var minutes = time - (hours * 60);
+
+                var timeStr = $"{hours:00}:{minutes:00}";
+
+                this.workbook.WS.Value(timeStr, this.timeStyle);
             }
 
             this.workbook.WS.Down();

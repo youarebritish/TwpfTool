@@ -68,7 +68,125 @@
     },
     {
       "id": 131110,
-      "name": "TppAtmosphere"
+      "name": "TppAtmosphere",
+      "parameters": [
+        {
+          "id": 516,
+          "name": "starLight"
+        },
+        {
+          "id": 518,
+          "name": "skyColorSunScale"
+        },
+        {
+          "id": 522,
+          "name": "shadowRange"
+        },
+        {
+          "id": 523,
+          "name": "shadowRangeExtra"
+        },
+        {
+          "id": 524,
+          "name": "hiResShadowRange"
+        },
+        {
+          "id": 525,
+          "name": "shadowProjectionRange"
+        },
+        {
+          "id": 526,
+          "name": "shadowfadeRange"
+        },
+        {
+          "id": 527,
+          "name": "selfShadowBias"
+        },
+        {
+          "id": 530,
+          "name": "influenceOfFog"
+        },
+        {
+          "id": 528,
+          "name": "shadowRangeLimit"
+        },
+        {
+          "id": 529,
+          "name": "shadowRangeFoculLengthConnectionScale"
+        },
+        {
+          "id": 552,
+          "name": "fogFalloff"
+        },
+        {
+          "id": 553,
+          "name": "fogFalloffStart"
+        },
+        {
+          "id": 560,
+          "name": "enviromentSpecular_ShScale0"
+        },
+        {
+          "id": 561,
+          "name": "enviromentSpecular_ShScale0_Ev"
+        },
+        {
+          "id": 562,
+          "name": "enviromentSpecular_ShScale1"
+        },
+        {
+          "id": 563,
+          "name": "enviromentSpecular_ShScale1_Ev"
+        },
+        {
+          "id": 564,
+          "name": "enviromentSpecular_ShScale2"
+        },
+        {
+          "id": 565,
+          "name": "enviromentSpecular_ShScale2_Ev"
+        },
+        {
+          "id": 566,
+          "name": "enviromentSpecular_minFrontReflectionRate"
+        },
+        {
+          "id": 567,
+          "name": "enviromentSpecular_Color"
+        },
+        {
+          "id": 568,
+          "name": "enableSteppedMoveOfDirectionalLight"
+        },
+        {
+          "id": 569,
+          "name": "divisionNumOfSteppedMove"
+        },
+        {
+          "id": 570,
+          "name": "interpolateTimeInSecond"
+        },
+        {
+          "id": 549,
+          "name": "dirLightFadeStart"
+        },
+        {
+          "id": 550,
+          "name": "dirLightFadeLength"
+        },
+        {
+          "id": 551,
+          "name": "dirLightFadeEnable"
+        },
+        {
+          "id": 557,
+          "name": "offsetPosY"
+        },
+        {
+          "id": 576,
+          "name": "starLuminanceScale"
+        }
+      ]
     },
     {
       "id": 131091,

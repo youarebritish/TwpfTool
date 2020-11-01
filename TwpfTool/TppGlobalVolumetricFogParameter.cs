@@ -9,13 +9,14 @@ namespace TwpfTool
     {
         public readonly IList<ParameterSetting> Settings = new List<ParameterSetting>();
         public ushort ParamId { get; private set; }
+        public WeatherParametersFile.TrackType TrackType { get; private set; }
 
         public static Parameter Read(BinaryReader reader)
         {
             var instance = new Parameter();
 
             var settingCount = reader.ReadByte();
-            var trackType = (WeatherParametersFile.TrackType)reader.ReadByte();
+            instance.TrackType = (WeatherParametersFile.TrackType)reader.ReadByte();
             instance.ParamId = reader.ReadUInt16();
 
             var settingOffsets = new uint[settingCount];
@@ -26,7 +27,7 @@ namespace TwpfTool
 
             for (var i = 0; i < settingCount; i++)
             {
-                var setting = ParameterSetting.Read(reader, trackType);
+                var setting = ParameterSetting.Read(reader, instance.TrackType);
                 instance.Settings.Add(setting);
             }
 

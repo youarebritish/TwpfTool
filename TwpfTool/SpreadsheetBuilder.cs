@@ -50,18 +50,25 @@ namespace TwpfTool
                              where setting.Tag == tag
                              select param;
 
-            foreach(var param in parameters)
+            foreach (var param in parameters)
             {
-                this.RenderParam(param, weatherId, times);
+                if (param.TrackType != WeatherParametersFile.TrackType.Rgb)
+                {
+                    this.RenderScalarParam(param, weatherId, times);
+                }
+                else
+                {
+                    this.RenderColorParam(param, weatherId, times);
+                }
+
                 this.workbook.WS.Down();
                 this.workbook.WS.Value(string.Empty);
             }
         }
 
-        private void RenderParam(Parameter param, ushort weatherId, IList<uint> times)
+        private void RenderScalarParam(Parameter param, ushort weatherId, IList<uint> times)
         {
             this.workbook.WS.Value("Param " + param.ParamId);
-
             foreach(var track in param.Settings[0].Tracks)
             {
                 if (track.WeatherId != weatherId)
@@ -82,6 +89,91 @@ namespace TwpfTool
                     }
 
                     keyframe.WriteValue(this.workbook, this.emptyStyle);
+                    currentColumn++;
+                }
+            }
+        }
+
+        private void RenderColorParam(Parameter param, ushort weatherId, IList<uint> times)
+        {
+            this.workbook.WS.Value("Param " + param.ParamId + "(.R)");
+            foreach (var track in param.Settings[0].Tracks)
+            {
+                if (track.WeatherId != weatherId)
+                {
+                    continue;
+                }
+
+                var currentColumn = 0;
+                foreach (var keyframe in track.GetKeyframes())
+                {
+                    var time = keyframe.Time;
+                    var timeIndex = times.IndexOf(time);
+
+                    while (currentColumn < timeIndex)
+                    {
+                        this.workbook.WS.Value(string.Empty);
+                        currentColumn++;
+                    }
+
+                    var colorKeyframe = keyframe as ColorKeyframe;
+                    this.workbook.WS.Value(colorKeyframe.Value.Red);
+                    currentColumn++;
+                }
+            }
+
+            this.workbook.WS.Down();
+            this.workbook.WS.Value(string.Empty);
+            this.workbook.WS.Value("Param " + param.ParamId + "(.G)");
+            foreach (var track in param.Settings[0].Tracks)
+            {
+                if (track.WeatherId != weatherId)
+                {
+                    continue;
+                }
+
+                var currentColumn = 0;
+                foreach (var keyframe in track.GetKeyframes())
+                {
+                    var time = keyframe.Time;
+                    var timeIndex = times.IndexOf(time);
+
+                    while (currentColumn < timeIndex)
+                    {
+                        this.workbook.WS.Value(string.Empty);
+                        currentColumn++;
+                    }
+
+                    var colorKeyframe = keyframe as ColorKeyframe;
+                    this.workbook.WS.Value(colorKeyframe.Value.Green);
+                    currentColumn++;
+                }
+            }
+
+            this.workbook.WS.Down();
+            this.workbook.WS.Value(string.Empty);
+            this.workbook.WS.Value("Param " + param.ParamId + "(.B)");
+            foreach (var track in param.Settings[0].Tracks)
+            {
+                if (track.WeatherId != weatherId)
+                {
+                    continue;
+                }
+
+                var currentColumn = 0;
+                foreach (var keyframe in track.GetKeyframes())
+                {
+                    var time = keyframe.Time;
+                    var timeIndex = times.IndexOf(time);
+
+                    while (currentColumn < timeIndex)
+                    {
+                        this.workbook.WS.Value(string.Empty);
+                        currentColumn++;
+                    }
+
+                    var colorKeyframe = keyframe as ColorKeyframe;
+                    this.workbook.WS.Value(colorKeyframe.Value.Blue);
                     currentColumn++;
                 }
             }

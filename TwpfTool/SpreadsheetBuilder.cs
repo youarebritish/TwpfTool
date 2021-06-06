@@ -38,7 +38,7 @@ namespace TwpfTool
         public SpreadsheetBuilder (WeatherParametersFile twpf, string name)
         {
             this.twpf = twpf;
-            this.workbook = new Workbook($"{name}.xlsx", "Weather 0");
+            this.workbook = new Workbook($"{name}.xlsx", "Weather=0");
         }
 
         public void Build()

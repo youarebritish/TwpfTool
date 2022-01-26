@@ -33,8 +33,16 @@
           "name": "mieScattering"
         },
         {
+          "id": 262,
+          "name": "nearDistance"
+        },
+        {
           "id": 260,
           "name": "luminance"
+        },
+        {
+          "id": 267,
+          "name": "falloff"
         },
         {
           "id": 268,
@@ -63,6 +71,14 @@
         {
           "id": 274,
           "name": "exposureOffset2_Ev"
+        },
+        {
+          "id": 277,
+          "name": "density_noise0_ratio"
+        },
+        {
+          "id": 278,
+          "name": "density_envelope0_add"
         }
       ]
     },
@@ -71,8 +87,16 @@
       "name": "TppAtmosphere",
       "parameters": [
         {
+          "id": 514,
+          "name": "daySkyAmbientScale"
+        },
+        {
           "id": 516,
           "name": "starLight"
+        },
+        {
+          "id": 517,
+          "name": "cloudiness"
         },
         {
           "id": 518,
@@ -81,6 +105,10 @@
         {
           "id": 519,
           "name": "skyLightSunScale"
+        },
+        {
+          "id": 521,
+          "name": "shadowMaskSpecular"
         },
         {
           "id": 522,
@@ -171,6 +199,10 @@
           "name": "interpolateTimeInSecond"
         },
         {
+          "id": 578,
+          "name": "influenceOfFogMin"
+        },
+        {
           "id": 549,
           "name": "dirLightFadeStart"
         },
@@ -183,12 +215,28 @@
           "name": "dirLightFadeEnable"
         },
         {
+          "id": 556,
+          "name": "followCameraEnable"
+        },
+        {
           "id": 557,
           "name": "offsetPosY"
         },
         {
+          "id": 558,
+          "name": "skyColor"
+        },
+        {
+          "id": 559,
+          "name": "skyEnable"
+        },
+        {
           "id": 576,
           "name": "starLuminanceScale"
+        },
+        {
+          "id": 577,
+          "name": "skyLightSunScaleOcean"
         }
       ]
     },
@@ -287,6 +335,14 @@
           "name": "maxExposure"
         },
         {
+          "id": 772,
+          "name": "exposureCompensation"
+        },
+        {
+          "id": 777,
+          "name": "keyValue"
+        },
+        {
           "id": 782,
           "name": "addExpComp0"
         },
@@ -319,6 +375,14 @@
           "name": "bloomWeight"
         },
         {
+          "id": 790,
+          "name": "ghostStrength"
+        },
+        {
+          "id": 791,
+          "name": "ghostScreenScale"
+        },
+        {
           "id": 775,
           "name": "bloomSize"
         }
@@ -333,7 +397,7 @@
           "name": "gcEnable"
         },
         {
-          "id": 2561,
+          "id": 2562,
           "name": "gcDensity"
         },
         {
@@ -391,8 +455,40 @@
           "name": "colorScale"
         },
         {
+          "id": 1027,
+          "name": "startSlope"
+        },
+        {
+          "id": 1028,
+          "name": "endSlope"
+        },
+        {
+          "id": 1030,
+          "name": "lut"
+        },
+        {
+          "id": 1031,
+          "name": "exposureThreshold"
+        },
+        {
           "id": 1032,
           "name": "colorScale2"
+        },
+        {
+          "id": 1033,
+          "name": "startSlope2"
+        },
+        {
+          "id": 1034,
+          "name": "endSlope2"
+        },
+        {
+          "id": 1035,
+          "name": "lut2"
+        },
+        {
+          "id": 1036,
+          "name": "exposureThreshold2"
         }
       ]
     },
@@ -401,8 +497,72 @@
       "name": "WeatherParameters",
       "parameters": [
         {
+          "id": 1793,
+          "name": "raininess"
+        },
+        {
           "id": 1794,
           "name": "windSpeed"
+        },
+        {
+          "id": 1795,
+          "name": "sandstormIntensity"
+        },
+        {
+          "id": 1796,
+          "name": "sandstormPeriodScale"
+        }
+      ]
+    },
+    {
+      "id": 327693,
+      "name": "LineSSAOParameters",
+      "parameters": [
+        {
+          "id": 1281,
+          "name": "innerRadius"
+        },
+        {
+          "id": 1282,
+          "name": "outerRadius"
+        },
+        {
+          "id": 1283,
+          "name": "maxDistanceInner"
+        },
+        {
+          "id": 1284,
+          "name": "maxDistanceOuter"
+        },
+        {
+          "id": 1286,
+          "name": "blurRadius"
+        },
+        {
+          "id": 1287,
+          "name": "falloffStart"
+        },
+        {
+          "id": 1288,
+          "name": "falloffRange"
+        },
+        {
+          "id": 1289,
+          "name": "gainonStartOverride"
+        },
+        {
+          "id": 1290,
+          "name": "gainonRange"
+        }
+      ]
+    },
+    {
+      "id": 589831,
+      "name": "LocalReflectionSettings",
+      "parameters": [
+        {
+          "id": 2310,
+          "name": "effectScale"
         }
       ]
     }

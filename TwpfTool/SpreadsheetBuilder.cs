@@ -1,4 +1,4 @@
-﻿using NanoXLSX;
+using NanoXLSX;
 using NanoXLSX.Styles;
 using System;
 using System.Collections.Generic;
@@ -38,7 +38,7 @@ namespace TwpfTool
         public SpreadsheetBuilder (WeatherParametersFile twpf, string name)
         {
             this.twpf = twpf;
-            this.workbook = new Workbook($"{name}.xlsx", "Weather=0");
+            this.workbook = new Workbook($"{name}.xlsx", "Weather=Clear");
         }
 
         public void Build()
@@ -65,9 +65,32 @@ namespace TwpfTool
 
             foreach (var weatherId in weatherIds)
             {
+                string weatherName;
+                switch(weatherId)
+                {
+                    case 1:
+                        weatherName = "Cloudy";
+                        break;
+                    case 2:
+                        weatherName = "Rainy";
+                        break;
+                    case 3:
+                        weatherName = "Sandstorm";
+                        break;
+                    case 4:
+                        weatherName = "Foggy";
+                        break;
+                    case 5:
+                        weatherName = "Pouring";
+                        break;
+                    default:
+                        weatherName = $"weatherId";
+                        break;
+                }
+
                 if (weatherId != 0)
                 {
-                    this.workbook.AddWorksheet($"Weather={weatherId}");
+                    this.workbook.AddWorksheet($"Weather={weatherName}");
                 }
 
                 foreach (var tag in this.twpf.Tags)
